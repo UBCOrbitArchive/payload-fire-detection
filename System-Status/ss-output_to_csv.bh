@@ -1,0 +1,12 @@
+#!/bin/bash
+
+Work(){
+
+echo "`date +"%d-%m-%y"`,`date +"%T"`,`users | wc -w`,`uptime | awk '{ gsub(/,/, ""); print $3 }'`,`runlevel`,`ps ac | wc -l`,`lscpu | grep "MHz" | awk '{print $4}' | paste -d , -s`,`sensors -u | grep "temp" | awk '{ print $2 }' | awk 'NF' | paste -d , -s`,`cat /proc/meminfo | awk '{ print $2 }' | paste -d , -s`,`vmstat -s | awk '{ print $1 }' | paste -d , -s`,`df -a | awk '{ print $2 }' | paste -d , -s`,`df -a | awk '{ print $3 }' | paste -d , -s`,`df -a | awk '{print $4}' | paste -d , -s`" 
+}
+Run(){
+Work
+}
+log=Sysinfo_$DATE
+Run | tee $log.txt
+mv $log.txt $log.csv
