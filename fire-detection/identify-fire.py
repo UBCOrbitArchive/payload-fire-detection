@@ -98,9 +98,15 @@ coords = cv2.findNonZero(image_filtered)
 if (coords is not None and len(coords) > 1):
     (x, y, w, h) = cv2.boundingRect(coords)
 
-    print_fire(x, y, w, h)
+    margin = 75
+    x0 = max(0, x - margin)
+    x1 = min(image.shape[1], x + w + margin)
+    y0 = max(0, y - margin)
+    y1 = min(image.shape[0], y + h + margin)
 
-    segmented = image[y:y+h, x:x+w]
+    print_fire(x0, x1, y0, y1)
+
+    segmented = image[y0:y1, x0:x1]
 
     if (sOutput != "None"):
         cv2.imwrite(sOutput, segmented)
