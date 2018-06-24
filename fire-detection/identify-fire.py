@@ -94,7 +94,11 @@ if(bSecond_Filter):
     else:
         image_filtered = cv2.morphologyEx(image_type, cv2.MORPH_CLOSE, kernel)  # false negatives
 
-coords = cv2.findNonZero(image_filtered)
+if(bSecond_Filter):
+    coords = cv2.findNonZero(image_filtered)
+else:
+    coords = cv2.findNonZero(image_type)
+    
 if (coords is not None and len(coords) > 1):
     (x, y, w, h) = cv2.boundingRect(coords)
 
